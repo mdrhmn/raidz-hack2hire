@@ -191,26 +191,64 @@ def cl_create_event(request):
         return render(request, 'cl_event_mngt.html')
 
 
-@allowed_users(allowed_role=['Committee Lead', 'Program Manager'])
+@allowed_users(allowed_role=['Program Manager'])
 @login_required(login_url='login')
-def event_proposal(request):
+def pm_event_proposal(request):
     if request.method == 'POST': 
-        return redirect('cl_event_mngt')
+        return redirect('pm_event_proposal')
     else:
 
-        if request.user.role__role_name == 'Program Manager':
-            context = {
-                'event_cat': Category.objects.all(),
-                'prog_mgr_list': Account.objects.filter(role__role_name='Program Manager'),
-                'cl_list': Account.objects.filter(role__role_name='Committee Lead'),
-                'cl_event_list': Event.objects.filter(comm_lead__email=request.user.email)
-            }
-        elif request.user.role__role_name == 'Committee Lead':
-            context = {
-                'event_cat': Category.objects.all(),
-                'prog_mgr_list': Account.objects.filter(role__role_name='Program Manager'),
-                'cl_list': Account.objects.filter(role__role_name='Committee Lead'),
-                'cl_event_list': Event.objects.filter(comm_lead__email=request.user.email)
-            }
-            
-        return render(request, 'proposal.html', context)
+        context = {
+            'event_cat': Category.objects.all(),
+            # 'prog_mgr_list': Account.objects.filter(role__role_name='Program Manager'),
+            'cl_list': Account.objects.filter(role__role_name='Committee Lead'),
+            'proposal_list': EventProposal.objects.filter(prog_mgr=Account.objects.get(email=request.user.email)),
+            # 'cl_event_list': Event.objects.filter(comm_lead__email=request.user.email)
+        }
+
+        return render(request, 'pm_event_proposal.html', context)
+
+
+@allowed_users(allowed_role=['Committee Lead'])
+@login_required(login_url='login')
+def cl_event_proposal(request):
+    if request.method == 'POST': 
+        return redirect('cl_event_proposal')
+    else:
+
+        context = {
+            'event_cat': Category.objects.all(),
+            # 'prog_mgr_list': Account.objects.filter(role__role_name='Program Manager'),
+            'cl_list': Account.objects.filter(role__role_name='Committee Lead'),
+            'proposal_list': EventProposal.objects.filter(comm_lead=Account.objects.get(email=request.user.email)),
+            # 'cl_event_list': Event.objects.filter(comm_lead__email=request.user.email)
+        }
+        return render(request, 'cl_event_proposal.html', context)
+
+@allowed_users(allowed_role=['Program Manager'])
+@login_required(login_url='login')
+def pm_propose_event(request):
+    if request.method == 'POST': 
+        event_name = request.POST['event_name']
+        event_category = Category.objects.get(name=request.POST['category'])
+        event_type = request.POST['type']
+        event_month= request.POST['month']
+        event_duration = request.POST['duration']
+
+        if (event_type == 'Virtual'):
+            virtual = True
+        else:
+            virtual = False
+
+        event_desc = request.POST['description']
+        # comm_lead = request.POST.getlist('comm_lead')
+        comm_lead = request.POST['comm_lead']
+
+        speaker = request.POST['speaker']
+
+        propose_event = EventProposal.objects.create(name=event_name, category=event_category, description=event_desc, month=event_month + "-01", duration=event_duration, speaker=speaker, virtual=virtual, prog_mgr=Account.objects.get(email=request.user.email), comm_lead=Account.objects.get(id=comm_lead), status_fk=Status.objects.get(name='New'))
+        # set_event_CL = propose_event.comm_lead.set(comm_lead)
+
+        return redirect('pm_event_proposal')
+    else:
+        return render(request, 'pm_event_proposal.html')

@@ -1,0 +1,67 @@
+{% extends "user_base.html" %}
+{% load static %}
+
+<head>
+    {% block title %}
+    <title>Home</title>
+    <meta name="description" content="">
+    {% endblock %}
+
+    {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    {% endblock %}
+</head>
+
+<body>
+    {% block body %}
+    <section class="">
+        
+        <div class="mt-10 sm:mt-0 mx-auto">
+            <div class="row justify-content-center">
+                <div class="col-sm-6">
+                    <form>
+                        <div class="shadow overflow-hidden sm:rounded-md">
+                            <div class="px-4 py-5 bg-white sm:p-6">
+                                <div class="grid grid-cols-4 gap-6">
+                                    
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="attendance"
+                                            class="block text-sm font-medium text-gray-700">Attendance</label>
+                                        <select id="attendance" name="attendance"
+                                            class="selectpicker">
+                                            <option value="1">Present</option>
+                                            <option value="2">Absent</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="px-4 py-3 bg-white text-right sm:px-6">
+                                    <button type="submit"
+                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Back
+                                    </button>
+                                    <button type="submit"
+                                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden sm:block" aria-hidden="true">
+            <div class="py-5">
+                <div class="border-t border-gray-200"></div>
+            </div>
+        </div>
+
+    </section>
+
+    {% endblock %}
+</body>

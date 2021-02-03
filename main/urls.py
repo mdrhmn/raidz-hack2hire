@@ -19,10 +19,11 @@ urlpatterns = [
 
     path('cl/event_management', views.cl_event_mngt, name="cl_event_mngt"),
     path('cl/create_event', views.cl_create_event, name="cl_create_event"),
-    path('cl/event_proposal', views.event_proposal, name="event_proposal"),
+    path('cl/event_proposal', views.cl_event_proposal, name="cl_event_proposal"),
 
-    path('pm/event_proposal', views.event_proposal, name="event_proposal"),
 
+    path('pm/event_proposal', views.pm_event_proposal, name="pm_event_proposal"),
+    path('pm/propose_event', views.pm_propose_event, name="pm_propose_event"),
 
 
 

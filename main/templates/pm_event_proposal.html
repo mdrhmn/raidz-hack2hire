@@ -3,44 +3,49 @@
 
 <head>
     {% block title %}
-    <title>Event Management</title>
+    <title>Event Proposal</title>
     {% endblock %}
 
 </head>
 
 <body>
-
     {% block page-title %}
-    <h2>Event Management</h2>
+    <h2>Event Proposal</h2>
     {% endblock %}
 
     {% block body %}
+
     <section class="m-5 bg-white p-3">
-        <a href="#create-event" data-toggle="modal" data-target="#create-event"
-            class="my-3 btn btn-primary hover:no-underline"><i class="fas fa-plus-square mr-2"></i>Create New Event</a>
+
+        {% if request.user.role.role_name == 'Program Manager' %}
+        <!-- if user = PM -->
+        <a href="#propose-event" data-toggle="modal" data-target="#propose-event"
+            class="my-3 btn btn-primary hover:no-underline"><i class="fas fa-plus-square mr-2"></i>Propose New Event</a>
+        <!-- end of PM -->
+        {% endif %}
 
         <div class="dataTables_scroll">
-
-            <table id="cl-event-table" class="table m-6 divide-y divide-gray-200 align-middle" style="width:100%;">
+            <table id="propose-table" class="table m-6 divide-y divide-gray-200 align-middle" style="width:100%;">
                 <thead>
                     <tr>
                         <th>Event</th>
-                        <th>Start Datetime</th>
-                        <th>End Datetime</th>
-                        <th>Registration Due Datetime</th>
+                        <th>Type</th>
+                        <th>Month</th>
+                        <th>Duration</th>
                         <th>Description</th>
-                        <th>Venue/Platform</th>
+                        <th>Committee Lead</th>
                         <th>Speaker</th>
                         <th>Status</th>
+
                     </tr>
                 </thead>
                 <tbody class="text-center">
 
-                    {% for cl_event in cl_event_list %}
+                    {% for proposal in proposal_list %}
                     <tr>
                         <td>
                             <div>
-                                {{ cl_event.name }}
+                                {{ proposal.name }}
                             </div>
                             {% if cl_event.category.name == 'Trainings' %}
 
@@ -66,15 +71,19 @@
                                 {{ cl_event.category.name }}
                             </span>
                             {% endif %}
-
-
                         </td>
-                        <td>{{ cl_event.start_datetime }}</td>
-                        <td>{{ cl_event.end_datetime }}</td>
-                        <td>{{ cl_event.reg_due_datetime }}</td>
-                        <td>{{ cl_event.description }}</td>
-                        <td>{{ cl_event.venue_platform }}</td>
-                        <td>{{ cl_event.speaker }}</td>
+                        <td>
+                            {% if proposal.virtual == True %}
+                            Virtual
+                            {% else %}
+                            Physical
+                            {% endif %}
+                        </td>
+                        <td>{{ proposal.month }}</td>
+                        <td>{{ proposal.duration }}</td>
+                        <td>{{ proposal.description }}</td>
+                        <td>{{ proposal.comm_lead.full_name }}</td> <!-- <td>Ashley</td>  -->
+                        <td>{{ proposal.speaker }}</td>
                         <td>
                             {% if cl_event.status_fk.name == 'Completed' %}
                             <span
@@ -85,32 +94,31 @@
                             {% endif %}
                         </td>
                     </tr>
-
                     {% endfor %}
 
                 </tbody>
             </table>
-
         </div>
 
     </section>
 
-    <div class="modal fade" id="create-event" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="propose-event" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create New Event</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Propose New Event</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action={% url 'cl_create_event' %} method="POST">
+                    <form action={% url 'pm_propose_event' %} method="POST">
                         {% csrf_token %}
                         <div class="overflow-hidden sm:rounded-md">
                             <div class="bg-white p-2">
                                 <div class="grid grid-cols-4 gap-6">
+                                    
                                     <div class="col-span-4 sm:col-span-4">
                                         <label for="event_name" class="block text-sm font-medium text-gray-700">Event
                                             Name</label>
@@ -141,22 +149,33 @@
                                     </div>
 
                                     <div class="col-span-4 sm:col-span-4">
-                                        <label for="prog_mgr" class="block text-sm font-medium text-gray-700">Program
-                                            Manager</label>
-                                        <select required id="prog_mgr" name="prog_mgr" class="selectpicker">
-                                            <option selected disabled value="">Choose...</option>
-                                            {% for prog_mgr in prog_mgr_list %}
-                                            <option value="{{ prog_mgr.id }}">{{ prog_mgr.full_name }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label for="startDate" class="block text-sm font-medium text-gray-700">Event Month</label>
+                                        <input type="month" id="month" name="month"
+                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
+                                            required>
                                     </div>
 
                                     <div class="col-span-4 sm:col-span-4">
-                                        <label for="comm_lead" class="block text-sm font-medium text-gray-700">Committee
-                                            Lead(s)</label>
-                                        <select multiple required id="comm_lead" name="comm_lead"
-                                            class="selectpicker form-control" data-live-search="true" data-size="5">
-                                            <option disabled value="">Choose...</option>
+                                        <label for="entDate" class="block text-sm font-medium text-gray-700">Event Duration (Hours)</label>
+                                        <input type="number" id="duration" name="duration"
+                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
+                                            required>
+                                    </div>
+
+
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="description"
+                                            class="block text-sm font-medium text-gray-700">Description</label>
+                                        <input type="text-area" name="description" id="description"
+                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-900 rounded-md"
+                                            required>
+                                    </div>
+
+                                    <div class="col-span-4 sm:col-span-4">
+                                        <label for="cl" class="block text-sm font-medium text-gray-700">Committee
+                                            Lead</label>
+                                        <select required id="comm_lead" name="comm_lead" class="selectpicker">
+                                            <option selected disabled value="">Choose...</option>
                                             {% for cl in cl_list %}
                                             <option value="{{ cl.id }}">{{ cl.full_name }}</option>
                                             {% endfor %}
@@ -164,59 +183,10 @@
                                     </div>
 
                                     <div class="col-span-4 sm:col-span-4">
-                                        <label for="startDate" class="block text-sm font-medium text-gray-700">Start
-                                            Datetime</label>
-                                        <input type="datetime-local" id="startDate" name="start_datetime"
-                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
-                                            required>
-                                    </div>
-
-                                    <div class="col-span-4 sm:col-span-4">
-                                        <label for="entDate" class="block text-sm font-medium text-gray-700">End
-                                            Datetime</label>
-                                        <input type="datetime-local" id="endDate" name="end_datetime"
-                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
-                                            required>
-                                    </div>
-
-                                    <div class="col-span-4 sm:col-span-4">
-                                        <label for="entDate"
-                                            class="block text-sm font-medium text-gray-700">Registration Due
-                                            Datetime</label>
-                                        <input type="datetime-local" id="endDate" name="reg_due_datetime"
-                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
-                                            required>
-                                    </div>
-
-                                    <div class="col-span-4 sm:col-span-4">
-                                        <label for="description"
-                                            class="block text-sm font-medium text-gray-700">Description</label>
-                                        <input type="text-area" name="description" id="description"
-                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
-                                            required>
-                                    </div>
-
-                                    <div class="col-span-4 sm:col-span-4">
-                                        <label for="venue_platform"
-                                            class="block text-sm font-medium text-gray-700">Venue/Platform</label>
-                                        <input type="text" name="venue_platform" id="venue_platform"
-                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
-                                            required>
-                                    </div>
-
-                                    <div class="col-span-4 sm:col-span-4">
                                         <label for="speaker"
                                             class="block text-sm font-medium text-gray-700">Speaker</label>
                                         <input type="text" name="speaker" id="speaker"
-                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
-                                            required>
-                                    </div>
-
-                                    <div class="col-span-4 sm:col-span-4">
-                                        <label for="img_url" class="block text-sm font-medium text-gray-700">Image
-                                            URL</label>
-                                        <input type="text" name="img_url" id="img_url"
-                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
+                                            class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-900 rounded-md"
                                             required>
                                     </div>
 
@@ -237,8 +207,8 @@
 
     <script>
         $(document).ready(function () {
-            $('#cl-event-table').DataTable({
-                "scrollX": false,
+            $('#propose-table').DataTable({
+
                 "columnDefs": [{
                         "width": "15%",
                         "targets": 0
@@ -252,7 +222,7 @@
                         "targets": 2
                     },
                     {
-                        "width": "10%",
+                        "width": "15%",
                         "targets": 3
                     },
                     {
@@ -272,7 +242,6 @@
             });
 
             jQuery('.dataTable').wrap('<div class="dataTables_scroll"/>');
-
         });
     </script>
 

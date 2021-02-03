@@ -111,7 +111,13 @@ class FeedbackPT(models.Model):
 
 class EventProposal(models.Model):
     name = models.CharField(max_length=100)
-    date = models.DateField(null=True, blank=True)
+    category = models.ForeignKey(
+        'main.Category',
+        on_delete=models.CASCADE,
+        default=''
+    )
+    month = models.DateField(null=True, blank=True)
+    duration = models.IntegerField(default=0)
     speaker = models.CharField(max_length=100, default='Not Set')
     description = models.TextField(max_length=5000, default='Not Set')
     virtual = models.BooleanField(default=False)
@@ -120,7 +126,11 @@ class EventProposal(models.Model):
         on_delete=models.CASCADE,
         related_name='prog_mgr_proposal'
     )
-    comm_lead = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    comm_lead = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        default=''
+    )
     status_fk = models.ForeignKey(
         'main.Status',
         on_delete=models.CASCADE
