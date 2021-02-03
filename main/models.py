@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 class Event(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     category = models.ForeignKey(
         'main.Category',
         on_delete=models.CASCADE
@@ -15,8 +15,10 @@ class Event(models.Model):
     reg_due_datetime = models.DateTimeField(null=True, blank=True)
     virtual = models.BooleanField(default=False)
     description = models.TextField(max_length=1000)
+    venue_platform = models.CharField(max_length=100, default='Not Set')
     prog_mgr = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="prog_mgr")
     comm_lead = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    speaker = models.CharField(max_length=100, default='Not Set')
     
     status_fk = models.ForeignKey(
         'main.Status',
@@ -106,3 +108,24 @@ class FeedbackPT(models.Model):
 
     def __str__(self):
         return str(self.participant_fk) + " - " + str(self.event_fk)
+
+class EventProposal(models.Model):
+    name = models.CharField(max_length=100)
+    date = models.DateField(null=True, blank=True)
+    speaker = models.CharField(max_length=100, default='Not Set')
+    description = models.TextField(max_length=5000, default='Not Set')
+    virtual = models.BooleanField(default=False)
+    prog_mgr = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='prog_mgr_proposal'
+    )
+    comm_lead = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    status_fk = models.ForeignKey(
+        'main.Status',
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return str(self.prog_mgr) + " - " + str(self.name)
+

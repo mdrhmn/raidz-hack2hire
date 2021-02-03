@@ -17,6 +17,14 @@ urlpatterns = [
 
     path('event_management', views.pt_event_mngt, name="pt_event_mngt"),
 
+    path('cl/event_management', views.cl_event_mngt, name="cl_event_mngt"),
+    path('cl/create_event', views.cl_create_event, name="cl_create_event"),
+    path('cl/event_proposal', views.event_proposal, name="event_proposal"),
+
+    path('pm/event_proposal', views.event_proposal, name="event_proposal"),
+
+
+
 
     path('404', views.unavailable_page, name="unavailable_page"),
 ]

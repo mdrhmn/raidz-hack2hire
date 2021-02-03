@@ -26,6 +26,12 @@
             <li class="nav-item mx-3">
                 <a class="nav-link" href="{% url 'pt_event_mngt' %}">Event Management</a>
             </li>
+
+            {% if request.user.role.role_name == 'Committee Lead' %}
+            <li class="nav-item mx-3">
+                <a class="nav-link" href="{% url 'cl_event_mngt' %}">Committee Lead</a>
+            </li>
+            {% endif %}
         </ul>
 
         {% if user.is_authenticated %}
@@ -34,14 +40,6 @@
                 <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action mx-3">Hi {{ request.user.full_name }}!<b
                         class="caret"></b></a>
                 <ul class="dropdown-menu dropdown-menu-right">
-
-                    {% if request.user.role.role_name == 'Committee Lead' %}
-                    <li>
-                        <div class="text-center">
-                            <a href="#" class="block px-4 py-2 mt-2 text-sm font-semibold bg-transparent hover:no-underline">Dashboard</a>
-                        </div>
-                    </li>
-                    {% endif %}
                     
                     <li>
                         <div class="text-center">
