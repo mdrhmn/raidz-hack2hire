@@ -12,22 +12,25 @@
 
     {% block body %}
 
-    {% if messages %}
-    {% for message in messages %}
-
-    {% if message.tags == 'error' %}
-    <div style="font-size: 80%; width: 20%; margin-bottom: 0rem; margin-top: .25rem;" class=" alert alert-danger" role="alert">
-        {{ message }}</div><br>
-
-    {% elif message.tags == 'success' %}
-    <div style="font-size: 80%; width: 20%; margin-bottom: 0rem; margin-top: .25rem;" class=" alert alert-success" role="alert">
-        {{ message }}</div><br>
-
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-
     <section>
+
+        {% if messages %}
+        {% for message in messages %}
+
+        {% if message.tags == 'error' %}
+        <div style="font-size: 80%; width: 20%; margin-bottom: 0rem; margin-top: .25rem;" class=" alert alert-danger"
+            role="alert">
+            {{ message }}</div><br>
+
+        {% elif message.tags == 'success' %}
+        <div style="font-size: 80%; width: 20%; margin-bottom: 0rem; margin-top: .25rem;" class=" alert alert-success"
+            role="alert">
+            {{ message }}</div><br>
+
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
         <table id="event_management" class="table m-6 divide-y divide-gray-200 align-middle" style="width:100%">
             <thead>
                 <tr>
@@ -93,7 +96,8 @@
     <script>
         $(document).ready(function () {
             $('#event_management').DataTable({
-                "scrollX": false
+                "scrollX": false,
+                "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
             });
         });
 

@@ -223,6 +223,8 @@ def pm_event_mngt(request):
 @login_required(login_url='login')
 def cl_create_event(request):
     if request.method == 'POST':
+
+        # CREATE EVENT
         event_name = request.POST['event_name']
         event_category = Category.objects.get(name=request.POST['category'])
         event_start_datetime = request.POST['start_datetime']
@@ -255,7 +257,60 @@ def cl_create_event(request):
             create_event_CL = EventCL.objects.create(CL_fk=Account.objects.get(
                 id=CL), event_fk=Event.objects.get(name=event_name))
 
-        messages.success(request, "Event created successful")
+        messages.success(request, "Event created successfully")
+
+        # REGISTER EVENT
+
+        registration = Registration.objects.create(participant_fk=Account.objects.get(
+            email=request.user.email), event_fk=Event.objects.get(name=event_name), status_fk=Status.objects.get(name='Registered'))
+        registration.save()
+        feedback = FeedbackPT.objects.create(participant_fk=Account.objects.get(
+            email=request.user.email), event_fk=Event.objects.get(name=event_name), status_fk=Status.objects.get(name='New'))
+        feedback.save()
+
+        event_details = Registration.objects.get(participant_fk=Account.objects.get(
+            email=request.user.email), event_fk=Event.objects.get(name=event_name), status_fk=Status.objects.get(name='Registered'))
+
+        html_message_template = loader.get_template(
+            "sample_email_template.html")
+        text_message_template = loader.get_template(
+            "sample_email_template.txt")
+        body_text = '[Dell Technologies MY] You have successfully registered for ' + str(event_name) + '. Event details are as follows:\n\nStart Datetime: ' + str(
+            timezone.localtime(event_details.event_fk.start_datetime)) + '\nEnd Datetime: ' + str(timezone.localtime(event_details.event_fk.end_datetime)) + ''
+        message_context = {'name': request.user.full_name,
+                           'event_name': event_name,
+                           'start_datetime': str(timezone.localtime(event_details.event_fk.start_datetime)),
+                           'end_datetime': str(timezone.localtime(event_details.event_fk.end_datetime)),
+                           }
+
+        text_message = text_message_template.render(message_context)
+        html_message = html_message_template.render(message_context)
+        subject = '[Dell Technologies MY]: ' + \
+            str(event_name) + ' Registration Successful'
+        try:
+            # Send email
+            # send_mail(subject, text_message, EMAIL_HOST_USER,
+            #           [request.user.email], html_message=html_message)
+
+            send_mail(subject, text_message, EMAIL_HOST_USER,
+                      ['mdrhmn99@gmail.com'], html_message=html_message)
+
+            account_sid = 'AC221635f6fd44a0ae1e51ff752c25a518'
+            auth_token = '43dc4dad503531cadf3072ffccdbf4f0'
+            client = Client(account_sid, auth_token)
+
+            # Send SMS
+            message = client.messages.create(
+                from_='+16319047730',
+                body=body_text,
+                to='+60148912758'
+            )
+
+            # FORMAT:
+            # send_mail(subject, message, sender, [recipient])
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+
 
         return redirect('cl_event_mngt')
     else:
@@ -377,3 +432,15 @@ def pm_event_reg(request):
             'event_list': Event.objects.all()
         }
         return render(request, 'pm_event_reg.html', context)
+
+
+@allowed_users(allowed_role=['Program Manager'])
+@login_required(login_url='login')
+def pm_event_feedback(request):
+    if request.method == 'POST':
+        print()
+    else:
+        context = {
+            'fb_list': FeedbackPT.objects.all()
+        }
+        return render(request, 'pm_event_feedback.html', context)
