@@ -49,3 +49,4 @@ $(document).on("click", "#event-reg-modal-pop", function () {
         }
     });
 });
+

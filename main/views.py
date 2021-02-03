@@ -59,5 +59,39 @@ def event_reg(request, pk):
         return render(request, 'unavailable_page.html')
 
 @login_required(login_url='login')
+def pt_event_mngt(request):
+    if request.method == 'POST':
+        return redirect('pt_event_mngt')
+    else:
+        context = {
+            'event_reg': Registration.objects.filter(participant_fk=Account.objects.get(email=request.user.email))
+        }
+
+        print(Registration.objects.filter(id=4))
+        return render(request, 'pt_event_mngt.html', context)
+
+
+@login_required(login_url='login')
 def unavailable_page(request):
     return render(request, 'unavailable_page.html')
+
+def pt_event_status_modal(request, pk):
+    context = {
+        'pk': pk,
+        'reg_details': Registration.objects.filter(id=pk),
+    }
+
+    return render(request, 'pt_event_status_modal.html', context)
+
+@login_required(login_url='login')
+def pt_event_status(request, pk):
+    if request.method == 'POST': 
+        status = request.POST['status']
+        if (status == 'Register'):
+            reg_status = Registration.objects.filter(id=pk).update(status_fk=Status.objects.get(name='Registered'))
+        elif (status == 'Unregister'):
+            reg_status = Registration.objects.filter(id=pk).update(status_fk=Status.objects.get(name='Unregistered'))
+
+        return redirect('pt_event_mngt')
+    else:
+        return render(request, 'unavailable_page.html')
