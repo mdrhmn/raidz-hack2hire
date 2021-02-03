@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-# from .models import *
+from .models import *
 from account.models import *
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -15,3 +15,26 @@ from django.template import loader
 
 def home(request):
     return render(request, 'home.html')
+
+def event_menu(request):
+    if request.method == 'POST': 
+        event_name = Event.objects.get(name=request.POST['event'])
+        registration = Registration.objects.create(participant_fk=Account.objects.get(email=request.user.email), event_fk=event_name, status_fk=Status.objects.get(name='Registered'))
+        registration.save()
+
+        feedback = FeedbackPT.objects.create(participant_fk=Account.objects.get(email=request.user.email), event_fk=event_name, status_fk=Status.objects.get(name='New'))
+
+        # event_PM = list(EventPM.objects.filter(event_fk=event_name))
+        # print(event_PM)
+        # for PM in event_PM:
+        #     print(PM.PM_fk.id)
+        #     feedback = Feedback.objects.create(participant_fk=CustomAccount.objects.get(email=request.user.email), event_fk=event_name, reviewer=EventPM.objects.get(PM_fk=PM.PM_fk), status_fk=Status.objects.get(name='New'))
+    else:
+
+        context = {
+            'event_obj': Event.objects.all()
+        }
+
+        return render(request, 'registration.html', context)
+    
+    return render(request, 'registration.html')
