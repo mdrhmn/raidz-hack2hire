@@ -65,8 +65,8 @@ def event_reg(request, pk):
         account_sid = 'AC221635f6fd44a0ae1e51ff752c25a518' 
         auth_token = '43dc4dad503531cadf3072ffccdbf4f0' 
         client = Client(account_sid, auth_token) 
-        body_text = '[Dell Technologies] You have successfully registered for ' + str(event_name) + '. Event details are as follows:\n\nStart Datetime: ' + str(timezone.localtime(event_details.event_fk.start_datetime)) + '\nEnd Datetime: ' + str(timezone.localtime(event_details.event_fk.end_datetime)) + ''
-        print(body_text)
+        body_text = '[Dell Technologies MY] You have successfully registered for ' + str(event_name) + '. Event details are as follows:\n\nStart Datetime: ' + str(timezone.localtime(event_details.event_fk.start_datetime)) + '\nEnd Datetime: ' + str(timezone.localtime(event_details.event_fk.end_datetime)) + ''
+        # print(body_text)
         # TWILIO SMS
         message = client.messages.create( 
                     from_='+16319047730',  
@@ -152,6 +152,18 @@ def cl_event_mngt(request):
         }
 
         return render(request, 'cl_event_mngt.html', context)
+
+@allowed_users(allowed_role=['Program Manager'])
+@login_required(login_url='login')
+def pm_event_mngt(request):
+    if request.method == 'POST': 
+        return redirect('pm_event_mngt')
+    else:
+        context = {
+            'event_list': Event.objects.all()
+        }
+
+        return render(request, 'pm_event_mngt.html', context)
 
 @allowed_users(allowed_role=['Committee Lead'])
 @login_required(login_url='login')
@@ -252,3 +264,45 @@ def pm_propose_event(request):
         return redirect('pm_event_proposal')
     else:
         return render(request, 'pm_event_proposal.html')
+
+@allowed_users(allowed_role=['Program Manager'])
+@login_required(login_url='login')
+def pm_event_reg(request):
+    if request.method == 'POST': 
+
+
+        event_name = request.POST['event_name']
+        participants = request.POST.getlist('participants')
+
+        for PT in participants:
+            registration = Registration.objects.create(participant_fk=Account.objects.get(id=PT), event_fk=Event.objects.get(name=event_name), status_fk=Status.objects.get(name='Registered'))
+            registration.save()
+            feedback = FeedbackPT.objects.create(participant_fk=Account.objects.get(id=PT), event_fk=Event.objects.get(name=event_name), status_fk=Status.objects.get(name='New'))
+            feedback.save()
+
+            event_details = Registration.objects.get(participant_fk=Account.objects.get(id=PT), event_fk=Event.objects.get(name=event_name), status_fk=Status.objects.get(name='Registered'))
+            phone_no = Account.objects.get(id=PT)
+
+            # Your Account Sid and Auth Token from twilio.com/console
+            # and set the environment variables. See http://twil.io/secure
+            account_sid = 'AC221635f6fd44a0ae1e51ff752c25a518' 
+            auth_token = '43dc4dad503531cadf3072ffccdbf4f0' 
+            client = Client(account_sid, auth_token) 
+            body_text = '[Dell Technologies MY] You have been invited (auto-registered) for ' + str(event_name) + '. Event details are as follows:\n\nStart Datetime: ' + str(timezone.localtime(event_details.event_fk.start_datetime)) + '\nEnd Datetime: ' + str(timezone.localtime(event_details.event_fk.end_datetime)) + ''
+            # print(body_text)
+
+            # TWILIO SMS
+            message = client.messages.create( 
+                        from_='+16319047730',  
+                        body=body_text,      
+                        to=phone_no.phone_number
+                    ) 
+
+        return redirect('pm_event_reg')
+    else:
+        context = {
+            'event_cat': Category.objects.all(),
+            'pt_list': Account.objects.exclude(role__role_name='Program Manager'),
+            'event_list': Event.objects.all()
+        }
+        return render(request, 'pm_event_reg.html', context)

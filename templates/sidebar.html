@@ -11,9 +11,13 @@
             <i class="fa fa-wallet pr-3 md:pr-3"></i><span
                 class="pb-1 md:pb-0 text-xs md:text-base block inline-block"> Event Proposal</span>
         </a>
-        <a href="{% url 'pm_event_proposal' %}" class="block p-3 align-middle text-white no-underline hover:text-blue-200">
-            <i class="fa fa-wallet pr-3 md:pr-3"></i><span
-                class="pb-1 md:pb-0 text-xs md:text-base block inline-block"> Event Registration</span>
+        <a href="{% url 'pm_event_reg' %}" class="block p-3 align-middle text-white no-underline hover:text-blue-200">
+            <i class="far fa-file-alt pr-3 md:pr-3"></i><span
+                class="pb-1 md:pb-0 text-xs md:text-base block inline-block"> Event <br>Registration</span>
+        </a>
+        <a href="{% url 'pm_event_mngt' %}" class="block p-3 align-middle text-white no-underline hover:text-blue-500">
+            <i class="fas fa-tasks pr-3 md:pr-3"></i><span
+                class="pb-1 md:pb-0 text-xs md:text-base block inline-block"> Event <br>Management</span>
         </a>
         {% elif request.user.role.role_name == 'Committee Lead'%}
         <a href="{% url 'cl_event_proposal' %}" class="block p-3 align-middle text-white no-underline hover:text-blue-200">

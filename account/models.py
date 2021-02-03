@@ -74,7 +74,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=200, default="Not Set")
     last_name = models.CharField(max_length=200, default="Not Set")
     full_name = models.CharField(max_length=200, default="Not Set")
-    phone_number = models.CharField(max_length=12, default="Not Set")
+    phone_number = models.CharField(max_length=20, default="Not Set")
     department = models.ForeignKey("account.Department", on_delete=models.CASCADE)
     position = models.CharField(max_length=200, default="Not Set")
     role = models.ForeignKey("account.Role", on_delete=models.CASCADE)

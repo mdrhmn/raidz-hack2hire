@@ -1,0 +1,142 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+<head>
+    {% block title %}
+    <title>Event Management</title>
+    {% endblock %}
+
+</head>
+
+<body>
+
+    {% block page-title %}
+    <h2>Event Management</h2>
+    {% endblock %}
+
+    {% block body %}
+    <section class="m-5 bg-white p-3">
+        <div class="dataTables_scroll">
+
+            <table id="pm-event-table" class="table m-6 divide-y divide-gray-200 align-middle" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Start Datetime</th>
+                        <th>End Datetime</th>
+                        <th>Registration Due Datetime</th>
+                        <th>Description</th>
+                        <th>Venue/Platform</th>
+                        <th>Speaker</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+
+                    {% for event in event_list %}
+                    <tr>
+                        <td>
+                            <div>
+                                {{ event.name }}
+                            </div>
+                            {% if event.category.name == 'Trainings' %}
+
+                            <span class="text-sm rounded-md bg-yellow-100 text-yellow-800 px-3 py-1">
+                                {{ event.category.name }}
+                            </span>
+
+                            {% elif event.category.name == 'Social Hangouts' %}
+
+                            <span class="text-sm rounded-md bg-indigo-100 text-indigo-800 px-3 py-1">
+                                {{ event.category.name }}
+                            </span>
+
+                            {% elif event.category.name == 'Volunteering' %}
+
+                            <span class="text-sm rounded-md bg-green-100 text-green-800 px-3 py-1">
+                                {{ event.category.name }}
+                            </span>
+
+                            {% elif event.category.name == 'Summits' %}
+
+                            <span class="text-sm rounded-md bg-red-100 text-red-800 px-3 py-1">
+                                {{ event.category.name }}
+                            </span>
+                            {% endif %}
+
+
+                        </td>
+                        <td>{{ event.start_datetime }}</td>
+                        <td>{{ event.end_datetime }}</td>
+                        <td>{{ event.reg_due_datetime }}</td>
+                        <td>{{ event.description }}</td>
+                        <td>{{ event.venue_platform }}</td>
+                        <td>{{ event.speaker }}</td>
+                        <td>
+                            {% if event.status_fk.name == 'Completed' %}
+                            <span
+                                class="mt-2 text-sm px-2 inline-flex font-semibold rounded-md bg-green-100 text-green-800 px-3 py-1">Completed</span>
+                            {% else %}
+                            <span
+                                class="mt-2 text-sm px-2 inline-flex font-semibold rounded-md bg-indigo-100 text-indigo-800 px-3 py-1">New</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            $('#pm-event-table').DataTable({
+                "scrollX": false,
+                "columnDefs": [{
+                        "width": "15%",
+                        "targets": 0
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 1
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 2
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 3
+                    },
+                    {
+                        "width": "50%",
+                        "targets": 4
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 5
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 6
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 7
+                    },
+
+                ]
+            });
+
+            jQuery('.dataTable').wrap('<div class="dataTables_scroll"/>');
+
+        });
+    </script>
+
+    {% endblock %}
+
+</body>
