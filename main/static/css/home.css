@@ -1,0 +1,22 @@
+section {
+  margin: 50px;
+}
+.carousel img {
+    filter:brightness(0.3);
+    height: 95vh;
+    object-fit: cover;
+}
+.filterDiv {
+  display: none;
+  transition: opacity 1s ease-out;
+}
+.show {
+  display: block;
+}
+.btn:hover {
+  background-color: #ddd;
+}
+.btn.active {
+  background-color: #666;
+  color: white;
+}

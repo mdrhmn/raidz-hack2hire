@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Poppins";
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #eee;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow-x: hidden;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.base-container {
+  border-radius: 15px;
+  background: #ffffff;
+  padding: 20px;
+  margin-left: 4%;
+  margin-top: 5%;
+  width: 92vw;
+  height: 100%;
+}
+
+th {
+  text-align: center;
+}
+
+.table-row {
+  cursor: pointer;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.row-center {
+  text-align: center;
+}
+
+/* ----------------------------- COLOR ----------------------------- */
+.bg-blue-dell {
+  background-color: #0076ce;
+}
+.blue-dell {
+  color: #0076ce;
+}
+
+.sidebar {
+  width: 200px;
+  padding-top: 100px;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  /* margin-top: -3%; */
+}
+
+.sidebar a {
+  text-decoration: none;
+}
+
+div.content {
+  margin-left: 200px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .sidebar a {
+    float: left;
+  }
+
+  div.content {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}

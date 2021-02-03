@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class AccountManager(BaseUserManager):
 
-    def create_user(self, email, first_name, last_name, password, role, full_name=None, phone_number="Not Set"):
+    def create_user(self, email, first_name, last_name, password, role, department, position="Not Set", full_name=None, phone_number="Not Set"):
 
         if not email:
             raise ValueError("Users must have email address")
@@ -16,7 +16,9 @@ class AccountManager(BaseUserManager):
                 full_name=first_name + " " + last_name,
                 role=role,
                 phone_number=phone_number,
-                password=password
+                password=password,
+                department=department,
+                position=position,
             )
         else:
             user = self.model(
@@ -26,7 +28,9 @@ class AccountManager(BaseUserManager):
                 full_name=full_name,
                 role=role,
                 phone_number=phone_number,
-                password=password
+                password=password,
+                department=department,
+                position=position,
             )
 
         if (role == 1 or role.role_name == 'Program Manager'):
@@ -42,7 +46,7 @@ class AccountManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, first_name, last_name, password, role, position, full_name=None, phone_number="Not Set", department="Not Set"):
+    def create_superuser(self, email, first_name, last_name, password, role, department, position="Not Set", full_name=None, phone_number="Not Set"):
 
         user = self.create_user(
             email=self.normalize_email(email),
@@ -52,7 +56,7 @@ class AccountManager(BaseUserManager):
             full_name=first_name + " " + last_name,
             role=Role.objects.get(id=role),
             phone_number=phone_number,
-            department=department,
+            department=Department.objects.get(id=department),
             position=position,
         )
 
@@ -81,7 +85,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     is_superuser = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'role']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'role', 'position', 'department']
 
     objects = AccountManager()
 

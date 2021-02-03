@@ -18,7 +18,7 @@ def login(request):
 
             auth.login(request, user)
             if request.user.is_superuser == True:
-                return redirect('main')
+                return redirect('home')
             else:
                 return redirect('home')
         else:
@@ -29,4 +29,4 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('login')
+    return redirect('home')

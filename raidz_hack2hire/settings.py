@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
+    'administrator',
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -80,8 +82,20 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# Custom User Model
 AUTH_USER_MODEL = 'account.Account'
 
+# Email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+# EMAIL_USE_SSL = True
+# EMAIL_PORT = 465
+EMAIL_HOST_USER = 'pmtuto1@gmail.com'
+EMAIL_HOST_PASSWORD = 'drhairul1920'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
