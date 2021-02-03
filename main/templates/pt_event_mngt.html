@@ -27,7 +27,7 @@
                 <tbody>
 
                     {% for reg in event_reg %}
-                    {% if reg.status_fk.name == 'Registered' or reg.status_fk.name == 'Completed' or reg.status_fk.name == 'Postponed' %}
+                    {% if reg.status_fk.name == 'Registered' or reg.status_fk.name == 'Attended' or reg.status_fk.name == 'Postponed' %}
                     <tr>
                         <td class="row-center">
                             <div>
@@ -40,7 +40,7 @@
                         <td class="row-center">{{ reg.event_fk.reg_due_datetime }}</td>
                         <td class="row-center">
 
-                            {% if reg.status_fk.name == 'Completed' %}
+                            {% if reg.status_fk.name == 'Attended' %}
                             <span
                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                 {{ reg.status_fk.name }}
@@ -50,16 +50,18 @@
                                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-green-800">
                                 {{ reg.status_fk.name }}
                             </span>
-                            <a id="pt-event-status-modal-pop" style="cursor: pointer;" data-url="{% url 'pt_event_status_modal' reg.id %}"
-                                title="Edit Status"><i class="fas fa-edit"></i>
+                            <a id="pt-event-status-modal-pop" style="cursor: pointer;"
+                                data-url="{% url 'pt_event_status_modal' reg.id %}" title="Edit Status"><i
+                                    class="fas fa-edit"></i>
                             </a>
                             {% endif %}
 
                         </td>
                         <!-- <td class="row-center">Participant</td> -->
                         <td class="row-center">
-                            {% if reg.status_fk.name == 'Completed' %}
-                            <a
+                            {% if reg.status_fk.name == 'Attended' %}
+                            <a id="pt-event-feedback-modal-pop" style="cursor: pointer;"
+                                data-url="{% url 'pt_event_feedback_modal' reg.id %}"
                                 class="hover:no-underline text-xs px-1 font-semibold rounded-full bg-blue-100 text-blue-800">Submit
                                 Feedback</a>
                             {% else %}
@@ -90,9 +92,19 @@
                     }
                 });
             });
+
+            $(document).on("click", "#pt-event-feedback-modal-pop", function () {
+                $.ajax({
+                    url: $(this).attr("data-url"),
+                    success: function (data) {
+                        $("#pt-event-feedback-modal-container").html(data);
+                        $('#pt-event-feedback-modal').modal('toggle');
+                    }
+                });
+            });
         </script>
 
         <div id="pt-event-status-modal-container"></div>
-
+        <div id="pt-event-feedback-modal-container"></div>
         {% endblock %}
     </body>

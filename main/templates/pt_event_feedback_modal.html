@@ -1,0 +1,96 @@
+{% load static %}
+
+<div class="modal fade" id="pt-event-feedback-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Submit Your Feedback</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            {% for reg in reg_details %}
+            <form method='POST' action={% url 'pt_event_feedback' reg.participant_fk.full_name %}>
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="overflow-hidden sm:rounded-md">
+                        <div class="bg-white sm:p-6">
+                            <div class="grid grid-cols-4 gap-6">
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="event_name" class="block text-sm font-medium text-gray-700">Event
+                                        Name</label>
+                                    <input style="border-color: red !important;" type="text" name="event_name"
+                                        id="first_name" value="{{ reg.event_fk.name }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-900 rounded-md"
+                                        required>
+                                </div>
+
+                                <!-- <div class="col-span-4 sm:col-span-4">
+                                    <label for="entertain" class="block text-sm font-medium text-gray-700">Overall, how
+                                        entertaining was the event?</label>
+                                    <select required name="fb_entertain"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option selected disabled value="">Choose...</option>
+                                        <option value='1'>Not entertaining at all</option>
+                                        <option value='2'>Neutral</option>
+                                        <option value='3'>Very entertaining</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="f_inspired" class="block text-sm font-medium text-gray-700">After the
+                                        event, how inspired did you feel?</label>
+                                    <select required name="fb_inspired"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option selected disabled value="">Choose...</option>
+                                        <option value='1'>Not Inspired at All</option>
+                                        <option value='2'>Neutral</option>
+                                        <option value='3'>Very Inspired</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="f_rate" class="block text-sm font-medium text-gray-700">How
+                                        likely are you to recommend this event to a friend or a
+                                        colleague?</label>
+                                    <select required name="fb_rate"
+                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <option selected disabled value="">Choose...</option>
+                                        <option value='1'>Very Unlikely</option>
+                                        <option value='2'>Unlikely</option>
+                                        <option value='3'>Neutral</option>
+                                        <option value='4'>Somewhat Likely</option>
+                                        <option value='5'>Very Likely</option>
+                                    </select>
+                                </div> -->
+                                
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label class="block text-sm font-medium text-gray-700">Suggestions</label>
+                                    <textarea name="suggestions" rows="4" cols="50">{{ fb_details.description }}</textarea>
+                                </div>
+                                <input type="hidden" name="event_name" value="{{ reg.event_fk.name }}">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+
+            </form>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>

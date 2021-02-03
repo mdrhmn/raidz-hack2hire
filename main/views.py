@@ -54,6 +54,8 @@ def event_reg(request, pk):
         event_name = Event.objects.get(name=request.POST['event_name'])
         registration = Registration.objects.create(participant_fk=Account.objects.get(email=request.user.email), event_fk=event_name, status_fk=Status.objects.get(name='Registered'))
         registration.save()
+        feedback = FeedbackPT.objects.create(participant_fk=Account.objects.get(email=request.user.email), event_fk=event_name, status_fk=Status.objects.get(name='New'))
+        feedback.save()
         return redirect('event_menu')
     else:
         return render(request, 'unavailable_page.html')
@@ -67,7 +69,6 @@ def pt_event_mngt(request):
             'event_reg': Registration.objects.filter(participant_fk=Account.objects.get(email=request.user.email))
         }
 
-        print(Registration.objects.filter(id=4))
         return render(request, 'pt_event_mngt.html', context)
 
 
@@ -92,6 +93,31 @@ def pt_event_status(request, pk):
         elif (status == 'Unregister'):
             reg_status = Registration.objects.filter(id=pk).update(status_fk=Status.objects.get(name='Unregistered'))
 
+        return redirect('pt_event_mngt')
+    else:
+        return render(request, 'unavailable_page.html')
+
+
+def pt_event_feedback_modal(request, pk):
+
+    event_name = Registration.objects.get(id=pk).event_fk.name
+
+    context = {
+        'pk': pk,
+        'reg_details': Registration.objects.filter(id=pk),
+        'fb_details': FeedbackPT.objects.get(participant_fk__email=request.user.email, event_fk__name=event_name, status_fk=Status.objects.get(name='New')),
+    }
+
+    return render(request, 'pt_event_feedback_modal.html', context)
+
+@login_required(login_url='login')
+def pt_event_feedback(request, pk):
+    if request.method == 'POST': 
+
+        suggestions = request.POST['suggestions']
+        event_name = request.POST['event_name']
+
+        fb_desc = FeedbackPT.objects.filter(participant_fk__email=request.user.email, event_fk__name=event_name, status_fk=Status.objects.get(name='New')).update(description=suggestions)
         return redirect('pt_event_mngt')
     else:
         return render(request, 'unavailable_page.html')

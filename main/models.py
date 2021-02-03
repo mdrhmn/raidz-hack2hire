@@ -99,7 +99,7 @@ class FeedbackPT(models.Model):
         'main.Status',
         on_delete=models.CASCADE
     )
-    
+
     description = models.TextField(max_length=1000, default='Not Set')
     # rating = models.IntegerField(validators=[MinValueValidator(1),
     #                                    MaxValueValidator(5)], null=True, blank=True)
