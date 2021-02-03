@@ -35,6 +35,29 @@ def event_menu(request):
             'event_obj': Event.objects.all()
         }
 
-        return render(request, 'registration.html', context)
+        return render(request, 'event_menu.html', context)
     
-    return render(request, 'registration.html')
+    return render(request, 'event_menu.html')
+
+def event_reg_modal(request, pk):
+    context = {
+        'pk': pk,
+        'event_details': Event.objects.filter(id=pk),
+        'pt_details': Account.objects.get(id=pk),
+    }
+
+    return render(request, 'event_reg_modal.html', context)
+
+@login_required(login_url='login')
+def event_reg(request, pk):
+    if request.method == 'POST': 
+        event_name = Event.objects.get(name=request.POST['event_name'])
+        registration = Registration.objects.create(participant_fk=Account.objects.get(email=request.user.email), event_fk=event_name, status_fk=Status.objects.get(name='Registered'))
+        registration.save()
+        return redirect('event_menu')
+    else:
+        return render(request, 'unavailable_page.html')
+
+@login_required(login_url='login')
+def unavailable_page(request):
+    return render(request, 'unavailable_page.html')

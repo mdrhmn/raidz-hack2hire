@@ -1,0 +1,180 @@
+{% extends "user_base.html" %}
+{% load static %}
+
+<head>
+    {% block title %}
+    <title>Event Menu</title>
+    {% endblock %}
+
+    {% block css %}
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"
+        integrity="sha256-VAvG3sHdS5LqTT+5A/aeq/bZGa/Uj04xKxY8KM/w9EE=" crossorigin="anonymous"></script>
+    {% endblock %}
+</head>
+
+<body>
+
+    <body>
+        {% block body %}
+        <section class="p-5">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div id='filters' class='sections'>
+                        <div>
+                            <h4>Category</h4>
+                            <div><input type='checkbox' name='cat' id='social' value='social'> Social Gathering</input>
+                            </div>
+                            <div><input type='checkbox' name='cat' id='training' value='training'> Training</input>
+                            </div>
+                            <div><input type='checkbox' name='cat' id='volunteering' value='volunteering'>
+                                Volunteering</input></div>
+                            <div><input type='checkbox' name='cat' id='summit' value='summit'> Summit</input></div>
+                        </div>
+                        <div>
+                            <br>
+                            <input class="px-2 py-1" type='button' id='none' value='Clear all'></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    {% for event in event_obj %}
+                    {% if event.category.name == 'Social Hangouts' %}
+                    <!-- one -->
+                    <div class="card card-category m-3" data-cat="social">
+                        <div class="row">
+                            <div class="col-sm-4 content-center p-5">
+                                <img width="220" height="200"
+                                    src="{{ event.img_url }}"
+                                    sizes="(max-width: 350px) 100vw, 350px">
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="">
+                                    <div class="card-body">
+                                        <div class="mb-2">
+                                            <span class="text-secondary">{{ event.category.name }}</span>
+                                            <h5 class="card-title text-lg font-bold">{{ event.name }}</h5>
+                                            <p class="card-text">{{ event.description}}
+                                            </p>
+
+                                            <h6 class="card-subtitle mb-2 text-muted mt-2">{{ event.reg_due_datetime }}</h6>
+
+                                            <a id="event-reg-modal-pop" data-url="{% url 'event_reg_modal' event.id %}"
+                                                class="button btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover"
+                                                role="button">Join</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% elif event.category.name == 'Volunteering' %}
+
+                    <!-- two -->
+                    <div class="card card-category m-3" data-cat="volunteering">
+                        <div class="row">
+                            <div class="col-sm-4 content-center p-5">
+                                <img width="220" height="200"
+                                    src="{{ event.img_url }}"
+                                    sizes="(max-width: 350px) 100vw, 350px">
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="">
+                                    <div class="card-body">
+                                        <div class="mb-2">
+                                            <span class="text-secondary">{{ event.category.name }}</span>
+                                            <h5 class="card-title text-lg font-bold">{{ event.name }}</h5>
+                                            <p class="card-text">{{ event.description}}
+                                            </p>
+
+                                            <h6 class="card-subtitle mb-2 text-muted mt-2">{{ event.reg_due_datetime }}</h6>
+
+                                            <a id="event-reg-modal-pop" data-url="{% url 'event_reg_modal' event.id %}" 
+                                                class="button btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover"
+                                                role="button">Join</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% elif event.category.name == 'Summits' %}
+
+                    <!-- three -->
+                    <div class="card card-category m-3" data-cat="summit">
+                        <div class="row">
+                            <div class="col-sm-4 content-center p-5">
+                                <img width="220" height="200"
+                                    src="{{ event.img_url }}"
+                                    sizes="(max-width: 350px) 100vw, 350px">
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="">
+                                    <div class="card-body">
+                                        <div class="mb-2">
+                                            <span class="text-secondary">{{ event.category.name }}</span>
+                                            <h5 class="card-title text-lg font-bold">{{ event.name }}</h5>
+                                            <p class="card-text">{{ event.description}}
+                                            </p>
+
+                                            <h6 class="card-subtitle mb-2 text-muted mt-2">{{ event.reg_due_datetime }}</h6>
+
+                                            <a id="event-reg-modal-pop" data-url="{% url 'event_reg_modal' event.id %}" 
+                                                class="button btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover"
+                                                role="button">Join</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% elif event.category.name == 'Trainings' %}
+
+                    <!-- four -->
+                    <div class="card card-category m-3" data-cat="training">
+                        <div class="row">
+                            <div class="col-sm-4 content-center p-5">
+                                <img width="220" height="200"
+                                    src="{{ event.img_url }}"
+                                    sizes="(max-width: 350px) 100vw, 350px">
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="">
+                                    <div class="card-body">
+                                        <div class="mb-2">
+                                            <span class="text-secondary">{{ event.category.name }}</span>
+                                            <h5 class="card-title text-lg font-bold">{{ event.name }}</h5>
+                                            <p class="card-text">{{ event.description}}
+                                            </p>
+
+                                            <h6 class="card-subtitle mb-2 text-muted mt-2">{{ event.reg_due_datetime }}</h6>
+
+                                            <a id="event-reg-modal-pop" data-url="{% url 'event_reg_modal' event.id %}" 
+                                                class="button btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover"
+                                                role="button">Join</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </section>
+
+        <script src="{% static 'js/menu.js' %}"></script>
+
+        <div id="event-reg-modal-container"></div>
+        {% endblock %}
+    </body>

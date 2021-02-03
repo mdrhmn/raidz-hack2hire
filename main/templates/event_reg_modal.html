@@ -1,0 +1,30 @@
+{% load static %}
+
+<div class="modal fade" id="event-reg-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>ç
+                </button>
+            </div>
+
+            <form method='POST' action={% url 'event_reg' pk %}>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    {% for event in event_details %}
+                    Confirm registration for {{ event.name }}?
+                    <input type="hidden" name="event_name" value="{{ event.name }}">
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
