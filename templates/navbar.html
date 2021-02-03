@@ -18,24 +18,22 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto text-blue-300 hover:text-white">
             <li class="nav-item mx-3 w-max">
-                <a class="nav-link text-white" href="{% url 'home' %}">Home</a>
+                <a class="nav-link w-max text-white" href="{% url 'home' %}">Home</a>
             </li>
+
             <li class="nav-item mx-3">
-                <a class="nav-link" href="{% url 'event_menu' %}">Event Menu</a>
-            </li>
-            <li class="nav-item mx-3">
-                <a class="nav-link" href="{% url 'pt_event_mngt' %}">Event Management</a>
+                <a class="nav-link w-max text-white" href="{% url 'pt_event_mngt' %}">Event Management</a>
             </li>
 
             {% if request.user.role.role_name == 'Committee Lead' %}
             <li class="nav-item mx-3">
-                <a class="nav-link" href="{% url 'cl_event_mngt' %}">Committee Lead</a>
+                <a class="nav-link w-max text-white" href="{% url 'cl_event_mngt' %}">Committee Lead</a>
             </li>
             {% endif %}
 
             {% if request.user.role.role_name == 'Program Manager' %}
             <li class="nav-item mx-3">
-                <a class="nav-link" href="{% url 'pm_event_proposal' %}">Program Manager</a>
+                <a class="nav-link w-max text-white" href="{% url 'pm_event_proposal' %}">Program Manager</a>
             </li>
             {% endif %}
         </ul>
@@ -43,7 +41,7 @@
         {% if user.is_authenticated %}
         <ul class="nav navbar-nav navbar-right ml-auto justify-content-end">
             <li class="nav-item dropdown">
-                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action mx-3">Hi {{ request.user.full_name }}!<b
+                <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action mx-3">Hi, {{ request.user.full_name }}!<b
                         class="caret"></b></a>
                 <ul class="dropdown-menu dropdown-menu-right">
                     
@@ -56,7 +54,7 @@
             </li>
         </ul>
         {% else %}
-        <div class="text-center">
+        <div class="text-center w-max">
             <a href="{% url 'login' %}" class="btn btn-primary hover:bg-blue-900" role="button">Log In</a>
         </div>
         {% endif %}

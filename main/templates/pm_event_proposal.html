@@ -14,6 +14,21 @@
     {% endblock %}
 
     {% block body %}
+    
+    {% if messages %}
+    {% for message in messages %}
+
+    {% if message.tags == 'error' %}
+    <div style="font-size: 80%; width: 20%; margin-bottom: 0rem; margin-top: .25rem;" class=" alert alert-danger" role="alert">
+        {{ message }}</div><br>
+
+    {% elif message.tags == 'success' %}
+    <div style="font-size: 80%; width: 20%; margin-bottom: 0rem; margin-top: .25rem;" class=" alert alert-success" role="alert">
+        {{ message }}</div><br>
+
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 
     <section class="m-5 bg-white p-3">
 

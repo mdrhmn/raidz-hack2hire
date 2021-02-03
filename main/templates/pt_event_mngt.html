@@ -10,101 +10,115 @@
 
 <body>
 
-    <body>
-        {% block body %}
+    {% block body %}
 
-        <section>
-            <table id="event_management" class="table m-6 divide-y divide-gray-200 align-middle" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Registration Due Date</th>
-                        <th>Status</th>
-                        <!-- <th>Role</th> -->
-                        <th>Feedback</th>
-                    </tr>
-                </thead>
-                <tbody>
+    {% if messages %}
+    {% for message in messages %}
 
-                    {% for reg in event_reg %}
-                    {% if reg.status_fk.name == 'Registered' or reg.status_fk.name == 'Attended' or reg.status_fk.name == 'Postponed' %}
-                    <tr>
-                        <td class="row-center">
-                            <div>
-                                {{ reg.event_fk.name }}
-                            </div>
-                            <div class="text-sm text-gray-500">
-                                {{ reg.event_fk.category.name }}
-                            </div>
-                        </td>
-                        <td class="row-center">{{ reg.event_fk.reg_due_datetime }}</td>
-                        <td class="row-center">
+    {% if message.tags == 'error' %}
+    <div style="font-size: 80%; width: 20%; margin-bottom: 0rem; margin-top: .25rem;" class=" alert alert-danger" role="alert">
+        {{ message }}</div><br>
 
-                            {% if reg.status_fk.name == 'Attended' %}
-                            <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                {{ reg.status_fk.name }}
-                            </span>
-                            {% else %}
-                            <span
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-green-800">
-                                {{ reg.status_fk.name }}
-                            </span>
-                            <a id="pt-event-status-modal-pop" style="cursor: pointer;"
-                                data-url="{% url 'pt_event_status_modal' reg.id %}" title="Edit Status"><i
-                                    class="fas fa-edit"></i>
-                            </a>
-                            {% endif %}
+    {% elif message.tags == 'success' %}
+    <div style="font-size: 80%; width: 20%; margin-bottom: 0rem; margin-top: .25rem;" class=" alert alert-success" role="alert">
+        {{ message }}</div><br>
 
-                        </td>
-                        <!-- <td class="row-center">Participant</td> -->
-                        <td class="row-center">
-                            {% if reg.status_fk.name == 'Attended' %}
-                            <a id="pt-event-feedback-modal-pop" style="cursor: pointer;"
-                                data-url="{% url 'pt_event_feedback_modal' reg.id %}"
-                                class="hover:no-underline text-xs px-1 font-semibold rounded-full bg-blue-100 text-blue-800">Submit
-                                Feedback</a>
-                            {% else %}
-                            Inaccessible
-                            {% endif %}
-                        </td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
 
-                </tbody>
-            </table>
-        </section>
+    <section>
+        <table id="event_management" class="table m-6 divide-y divide-gray-200 align-middle" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Event</th>
+                    <th>Registration Due Date</th>
+                    <th>Status</th>
+                    <!-- <th>Role</th> -->
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
 
-        <script>
-            $(document).ready(function () {
-                $('#event_management').DataTable({
-                    "scrollX": false
-                });
+                {% for reg in event_reg %}
+                {% if reg.status_fk.name == 'Registered' or reg.status_fk.name == 'Attended' or reg.status_fk.name == 'Postponed' %}
+                <tr>
+                    <td class="row-center">
+                        <div>
+                            {{ reg.event_fk.name }}
+                        </div>
+                        <div class="text-sm text-gray-500">
+                            {{ reg.event_fk.category.name }}
+                        </div>
+                    </td>
+                    <td class="row-center">{{ reg.event_fk.reg_due_datetime }}</td>
+                    <td class="row-center">
+
+                        {% if reg.status_fk.name == 'Attended' %}
+                        <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            {{ reg.status_fk.name }}
+                        </span>
+                        {% else %}
+                        <span
+                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-green-800">
+                            {{ reg.status_fk.name }}
+                        </span>
+                        <a id="pt-event-status-modal-pop" style="cursor: pointer;"
+                            data-url="{% url 'pt_event_status_modal' reg.id %}" title="Edit Status"><i
+                                class="fas fa-edit"></i>
+                        </a>
+                        {% endif %}
+
+                    </td>
+                    <!-- <td class="row-center">Participant</td> -->
+                    <td class="row-center">
+                        {% if reg.status_fk.name == 'Attended' or reg.event_fk.status_fk.name == 'Completed' %}
+                        <a id="pt-event-feedback-modal-pop" style="cursor: pointer;"
+                            data-url="{% url 'pt_event_feedback_modal' reg.id %}"
+                            class="hover:no-underline text-xs px-1 font-semibold rounded-full bg-blue-100 text-blue-800">Submit
+                            Feedback</a>
+                        {% else %}
+                        Inaccessible
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            $('#event_management').DataTable({
+                "scrollX": false
             });
+        });
 
-            $(document).on("click", "#pt-event-status-modal-pop", function () {
-                $.ajax({
-                    url: $(this).attr("data-url"),
-                    success: function (data) {
-                        $("#pt-event-status-modal-container").html(data);
-                        $('#pt-event-status-modal').modal('toggle');
-                    }
-                });
+        $(document).on("click", "#pt-event-status-modal-pop", function () {
+            $.ajax({
+                url: $(this).attr("data-url"),
+                success: function (data) {
+                    $("#pt-event-status-modal-container").html(data);
+                    $('#pt-event-status-modal').modal('toggle');
+                }
             });
+        });
 
-            $(document).on("click", "#pt-event-feedback-modal-pop", function () {
-                $.ajax({
-                    url: $(this).attr("data-url"),
-                    success: function (data) {
-                        $("#pt-event-feedback-modal-container").html(data);
-                        $('#pt-event-feedback-modal').modal('toggle');
-                    }
-                });
+        $(document).on("click", "#pt-event-feedback-modal-pop", function () {
+            $.ajax({
+                url: $(this).attr("data-url"),
+                success: function (data) {
+                    $("#pt-event-feedback-modal-container").html(data);
+                    $('#pt-event-feedback-modal').modal('toggle');
+                }
             });
-        </script>
+        });
+    </script>
 
-        <div id="pt-event-status-modal-container"></div>
-        <div id="pt-event-feedback-modal-container"></div>
-        {% endblock %}
-    </body>
+    <div id="pt-event-status-modal-container"></div>
+    <div id="pt-event-feedback-modal-container"></div>
+    {% endblock %}
+</body>
