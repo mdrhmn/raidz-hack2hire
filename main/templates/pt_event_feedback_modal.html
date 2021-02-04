@@ -25,7 +25,7 @@
                                         Name</label>
                                     <input style="border-color: red !important;" type="text" name="event_name"
                                         id="first_name" value="{{ reg.event_fk.name }}"
-                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-900 rounded-md"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
                                         required>
                                 </div>
 
@@ -70,7 +70,7 @@
                                 
                                 <div class="col-span-4 sm:col-span-4">
                                     <label class="block text-sm font-medium text-gray-700">Suggestions</label>
-                                    <textarea name="suggestions" rows="4" cols="50">{{ fb_details.description }}</textarea>
+                                    <textarea class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md" name="suggestions" rows="4" cols="50">{{ fb_details.description }}</textarea>
                                 </div>
                                 <input type="hidden" name="event_name" value="{{ reg.event_fk.name }}">
 
@@ -85,7 +85,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
 
             </form>

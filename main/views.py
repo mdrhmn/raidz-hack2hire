@@ -444,3 +444,57 @@ def pm_event_feedback(request):
             'fb_list': FeedbackPT.objects.all()
         }
         return render(request, 'pm_event_feedback.html', context)
+
+@allowed_users(allowed_role=['Committee Lead'])
+@login_required(login_url='login')
+def cl_edit_event_modal(request, pk):
+    context = {
+        'pk': pk,
+        'event_details': Event.objects.get(id=pk),
+        'event_cat': Category.objects.all(),
+        'prog_mgr_list': Account.objects.filter(role__role_name='Program Manager'),
+        'cl_list': Account.objects.filter(role__role_name='Committee Lead'),
+        'start_datetime': str(timezone.localtime(Event.objects.get(id=pk).start_datetime).strftime("%Y-%m-%d")) + "T" + str(timezone.localtime(Event.objects.get(id=pk).start_datetime).strftime("%H:%M:%S")),
+        'end_datetime': str(timezone.localtime(Event.objects.get(id=pk).end_datetime).strftime("%Y-%m-%d")) + "T" + str(timezone.localtime(Event.objects.get(id=pk).end_datetime).strftime("%H:%M:%S")),
+        'reg_due_datetime': str(timezone.localtime(Event.objects.get(id=pk).reg_due_datetime).strftime("%Y-%m-%d")) + "T" + str(timezone.localtime(Event.objects.get(id=pk).reg_due_datetime).strftime("%H:%M:%S")),
+
+        # 'reg_details': Registration.objects.filter(id=pk),
+    }
+
+    print(Event.objects.get(id=pk).start_datetime)
+
+    return render(request, 'cl_edit_event_modal.html', context)
+
+@allowed_users(allowed_role=['Committee Lead'])
+@login_required(login_url='login')
+def cl_edit_event(request, pk):
+    if request.method == 'POST':
+
+        # CREATE EVENT
+        event_name = request.POST['event_name']
+        event_category = Category.objects.get(name=request.POST['category'])
+        event_start_datetime = request.POST['start_datetime']
+        event_end_datetime = request.POST['end_datetime']
+        event_reg_due_datetime = request.POST['reg_due_datetime']
+        event_type = request.POST['type']
+
+        if (event_type == 'Virtual'):
+            virtual = True
+        else:
+            virtual = False
+
+        event_desc = request.POST['description']
+        event_venue_platform = request.POST['venue_platform']
+        prog_mgr = request.POST.getlist('prog_mgr')
+        comm_lead = request.POST.getlist('comm_lead')
+        img_url = request.POST['img_url']
+        speaker = request.POST['speaker']
+
+        update_event = Event.objects.filter(id=pk).update(name=event_name, category=event_category, description=event_desc, start_datetime=event_start_datetime, end_datetime=event_end_datetime,
+                                            reg_due_datetime=event_reg_due_datetime, virtual=virtual, venue_platform=event_venue_platform, img_url=img_url, speaker=speaker)
+
+        messages.success(request, "Event change successful")
+
+        return redirect('cl_event_mngt')
+    else:
+        return render(request, 'unavailable_page.html')

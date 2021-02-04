@@ -20,6 +20,8 @@ urlpatterns = [
     path('cl/event_management', views.cl_event_mngt, name="cl_event_mngt"),
     path('cl/create_event', views.cl_create_event, name="cl_create_event"),
     path('cl/event_proposal', views.cl_event_proposal, name="cl_event_proposal"),
+    path('cl/edit_event_modal/<str:pk>', views.cl_edit_event_modal, name="cl_edit_event_modal"),
+    path('cl/edit_event/<str:pk>', views.cl_edit_event, name="cl_edit_event"),
 
     path('pm/event_management', views.pm_event_mngt, name="pm_event_mngt"),
     path('pm/event_proposal', views.pm_event_proposal, name="pm_event_proposal"),

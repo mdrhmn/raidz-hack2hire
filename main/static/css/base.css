@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
-
 * {
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
@@ -43,8 +42,7 @@ th {
   cursor: pointer;
 }
 
-.table td,
-.table th {
+.table td, .table th {
   vertical-align: middle;
 }
 
@@ -53,9 +51,11 @@ th {
 }
 
 /* ----------------------------- COLOR ----------------------------- */
+
 .bg-blue-dell {
   background-color: #0076ce;
 }
+
 .blue-dell {
   color: #0076ce;
 }
@@ -92,28 +92,25 @@ th {
 
 @media (min-width: 768px) {
   #sidebar-wrapper {
-      margin-left: 0;
+    margin-left: 0;
   }
-
   #page-content-wrapper {
-      min-width: 0;
-      width: 100%;
+    min-width: 0;
+    width: 100%;
   }
-
   #wrapper.toggled #sidebar-wrapper {
-      margin-left: -15rem;
+    margin-left: -15rem;
   }
 }
 
-.dataTables_scroll
-{
-    overflow:auto;
+.dataTables_scroll {
+  overflow: auto;
 }
 
 /* --------------------- OVERRIDE BOOTSTRAP-SELECT STYLE -------------------- */
+
 .btn-light {
-	/* border: 1px solid #ced4da; */
+  /* border: 1px solid #ced4da; */
   background-color: #fff;
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
-  
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075)!important;
 }

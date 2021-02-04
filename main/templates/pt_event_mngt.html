@@ -50,26 +50,48 @@
                         <div>
                             {{ reg.event_fk.name }}
                         </div>
-                        <div class="text-sm text-gray-500">
+
+                        {% if reg.event_fk.category.name == 'Trainings' %}
+
+                        <span class="text-sm rounded-md bg-yellow-100 text-yellow-800 px-3 py-1">
                             {{ reg.event_fk.category.name }}
-                        </div>
+                        </span>
+
+                        {% elif reg.event_fk.category.name == 'Social Hangouts' %}
+
+                        <span class="text-sm rounded-md bg-indigo-100 text-indigo-800 px-3 py-1">
+                            {{ reg.event_fk.category.name }}
+                        </span>
+
+                        {% elif reg.event_fk.category.name == 'Volunteering' %}
+
+                        <span class="text-sm rounded-md bg-green-100 text-green-800 px-3 py-1">
+                            {{ reg.event_fk.category.name }}
+                        </span>
+
+                        {% elif reg.event_fk.category.name == 'Summits' %}
+
+                        <span class="text-sm rounded-md bg-red-100 text-red-800 px-3 py-1">
+                            {{ reg.event_fk.category.name }}
+                        </span>
+                        {% endif %}
                     </td>
                     <td class="row-center">{{ reg.event_fk.reg_due_datetime }}</td>
                     <td class="row-center">
 
                         {% if reg.status_fk.name == 'Attended' %}
                         <span
-                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                            class="text-sm rounded-md bg-green-100 text-green-800 px-3 py-1">
                             {{ reg.status_fk.name }}
                         </span>
                         {% else %}
                         <span
-                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-green-800">
+                            class="text-sm rounded-md bg-yellow-100 text-yellow-800 px-3 py-1">
                             {{ reg.status_fk.name }}
                         </span>
                         <a id="pt-event-status-modal-pop" style="cursor: pointer;"
                             data-url="{% url 'pt_event_status_modal' reg.id %}" title="Edit Status"><i
-                                class="fas fa-edit"></i>
+                                class="fas fa-edit ml-1"></i>
                         </a>
                         {% endif %}
 
@@ -79,10 +101,11 @@
                         {% if reg.status_fk.name == 'Attended' or reg.event_fk.status_fk.name == 'Completed' %}
                         <a id="pt-event-feedback-modal-pop" style="cursor: pointer;"
                             data-url="{% url 'pt_event_feedback_modal' reg.id %}"
-                            class="hover:no-underline text-xs px-1 font-semibold rounded-full bg-blue-100 text-blue-800">Submit
+                            class="hover:no-underline text-sm rounded-md bg-blue-100 text-blue-800 px-3 py-1">Submit
                             Feedback</a>
                         {% else %}
-                        Inaccessible
+                        <span class="hover:no-underline text-sm rounded-md bg-gray-100 text-gray-800 px-3 py-1">Submit
+                            Feedback</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -97,7 +120,10 @@
         $(document).ready(function () {
             $('#event_management').DataTable({
                 "scrollX": false,
-                "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
+                "lengthMenu": [
+                    [5, 10, 20, -1],
+                    [5, 10, 20, "All"]
+                ],
             });
         });
 
@@ -125,4 +151,10 @@
     <div id="pt-event-status-modal-container"></div>
     <div id="pt-event-feedback-modal-container"></div>
     {% endblock %}
+
+    {% block footer_adjust %}
+    <div style="min-height: 61vh;">
+    </div>
+    {% endblock %}
+
 </body>

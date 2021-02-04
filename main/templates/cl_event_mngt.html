@@ -52,6 +52,7 @@
                         <th>Venue/Platform</th>
                         <th>Speaker</th>
                         <th>Status</th>
+                        <th>Edit Event</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
@@ -87,7 +88,6 @@
                             </span>
                             {% endif %}
 
-
                         </td>
                         <td>{{ cl_event.start_datetime }}</td>
                         <td>{{ cl_event.end_datetime }}</td>
@@ -103,6 +103,11 @@
                             <span
                                 class="mt-2 text-sm px-2 inline-flex font-semibold rounded-md bg-indigo-100 text-indigo-800 px-3 py-1">New</span>
                             {% endif %}
+                        </td>
+                        <td>
+                            <a id="cl-edit-event-modal-pop" class="btn btn-secondary"
+                                data-url="{% url 'cl_edit_event_modal' cl_event.id %}" role="button"><i
+                                    class="fas fa-user-edit"></i></a>
                         </td>
                     </tr>
 
@@ -163,7 +168,8 @@
                                     <div class="col-span-4 sm:col-span-4">
                                         <label for="prog_mgr" class="block text-sm font-medium text-gray-700">Program
                                             Manager</label>
-                                        <select required id="prog_mgr" name="prog_mgr" class="selectpicker" data-live-search="true" data-size="5">
+                                        <select required id="prog_mgr" name="prog_mgr" class="selectpicker"
+                                            data-live-search="true" data-size="5">
                                             <option selected disabled value="">Choose...</option>
                                             {% for prog_mgr in prog_mgr_list %}
                                             <option value="{{ prog_mgr.id }}">{{ prog_mgr.full_name }}</option>
@@ -203,7 +209,7 @@
                                         <label for="entDate"
                                             class="block text-sm font-medium text-gray-700">Registration Due
                                             Datetime</label>
-                                        <input type="datetime-local" id="endDate" name="reg_due_datetime"
+                                        <input type="datetime-local" id="reg_due_datetime" name="reg_due_datetime"
                                             class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
                                             required>
                                     </div>
@@ -259,7 +265,10 @@
         $(document).ready(function () {
             $('#cl-event-table').DataTable({
                 "scrollX": false,
-                "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
+                "lengthMenu": [
+                    [5, 10, 20, -1],
+                    [5, 10, 20, "All"]
+                ],
                 "columnDefs": [{
                         "width": "15%",
                         "targets": 0
@@ -294,8 +303,21 @@
 
             jQuery('.dataTable').wrap('<div class="dataTables_scroll"/>');
 
+            $(document).on("click", "#cl-edit-event-modal-pop", function () {
+                $.ajax({
+                    url: $(this).attr("data-url"),
+                    success: function (data) {
+                        $("#cl-edit-event-modal-container").html(data);
+                        $('#cl-edit-event-modal').modal('toggle');
+                    }
+                });
+            });
+
         });
     </script>
+
+    <div id="cl-edit-event-modal-container"></div>
+
 
     {% endblock %}
 

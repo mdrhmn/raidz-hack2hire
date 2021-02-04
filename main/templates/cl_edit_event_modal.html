@@ -1,0 +1,166 @@
+{% load static %}
+
+<div class="modal fade" id="cl-edit-event-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action={% url 'cl_edit_event' pk %} method="POST">
+                    {% csrf_token %}
+                    <div class="overflow-hidden sm:rounded-md">
+                        <div class="bg-white p-2">
+                            <div class="grid grid-cols-4 gap-6">
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="event_name" class="block text-sm font-medium text-gray-700">Event
+                                        Name</label>
+                                    <input type="text" name="event_name" id="first_name" value="{{ event_details.name }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
+                                        required>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="category" class="block text-sm font-medium text-gray-700">Event
+                                        Category</label>
+                                    <select required id="category" name="category" class="selectpicker">
+                                        <option selected disabled value="">Choose...</option>
+                                        {% for cat in event_cat %}
+                                        {% if event_details.category.name == cat.name %}
+                                        <option selected value="{{ cat.name }}">{{ cat.name }}</option>
+                                        {% else %}
+                                        <option value="{{ cat.name }}">{{ cat.name }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="type" class="block text-sm font-medium text-gray-700">Event
+                                        Type</label>
+                                        
+                                    <select required id="type" name="type" class="selectpicker">
+                                        {% if event_details.virtual == True %}
+                                        <option selected value="Virtual">Virtual</option>
+                                        <option value="Physical">Physical</option>
+                                        {% else %}
+                                        <option selected value="Physical">Physical</option>
+                                        <option value="Virtual">Virtual</option>
+                                        {% endif %}
+                                    </select>
+                                </div>
+
+                                <!-- <div class="col-span-4 sm:col-span-4">
+                                    <label for="prog_mgr" class="block text-sm font-medium text-gray-700">Program
+                                        Manager</label>
+                                    <select required id="prog_mgr" name="prog_mgr" class="selectpicker"
+                                        data-live-search="true" data-size="5">
+                                        <option selected disabled value="">Choose...</option>
+                                        {% for prog_mgr in prog_mgr_list %}
+                                        {% if event_details.prog_mgr.full_name == prog_mgr.full_name %}
+                                        <option selected value="{{ prog_mgr.id }}">{{ prog_mgr.full_name }}</option>
+                                        {% else %}
+                                        <option value="{{ prog_mgr.id }}">{{ prog_mgr.full_name }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="comm_lead" class="block text-sm font-medium text-gray-700">Committee
+                                        Lead(s)</label>
+                                    <select multiple required id="comm_lead" name="comm_lead"
+                                        class="selectpicker form-control" data-live-search="true" data-size="5">
+                                        <option disabled value="">Choose...</option>
+                                        {% for cl in cl_list %}
+                                        {% if event_details.comm_lead.full_name == cl.full_name %}
+                                        <option selected value="{{ cl.id }}">{{ cl.full_name }}</option>
+                                        {% else %}
+                                        <option value="{{ cl.id }}">{{ cl.full_name }}</option>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div> -->
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="startDate" class="block text-sm font-medium text-gray-700">Start
+                                        Datetime</label>
+                                    <input type="datetime-local" id="startDate" name="start_datetime" value="{{ start_datetime }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
+                                        required>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="entDate" class="block text-sm font-medium text-gray-700">End
+                                        Datetime</label>
+                                    <input type="datetime-local" id="endDate" name="end_datetime" value="{{ end_datetime }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
+                                        required>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="entDate" class="block text-sm font-medium text-gray-700">Registration
+                                        Due Datetime</label>
+                                    <input type="datetime-local" id="reg_due_datetime" name="reg_due_datetime" value="{{ reg_due_datetime }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-300 rounded-md"
+                                        required>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="description"
+                                        class="block text-sm font-medium text-gray-700">Description</label>
+                                    <!-- <input type="text-area" name="description" id="description" value="{{ event_details.description }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
+                                        required> -->
+
+                                    <textarea class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md" name="description" id="description" rows="4" cols="50">{{ event_details.description }}</textarea>
+
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="venue_platform"
+                                        class="block text-sm font-medium text-gray-700">Venue/Platform</label>
+                                    <input type="text" name="venue_platform" id="venue_platform" value="{{ event_details.venue_platform }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
+                                        required>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="speaker" class="block text-sm font-medium text-gray-700">Speaker</label>
+                                    <input type="text" name="speaker" id="speaker" value="{{ event_details.speaker }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
+                                        required>
+                                </div>
+
+                                <div class="col-span-4 sm:col-span-4">
+                                    <label for="img_url" class="block text-sm font-medium text-gray-700">Image
+                                        URL</label>
+                                    <input type="text" name="img_url" id="img_url" value="{{ event_details.img_url }}"
+                                        class="p-1.5 mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm border-gray-900 rounded-md"
+                                        required>
+
+                                </div>
+
+                            </div>
+
+                            <div class="bg-white text-right my-3">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    $('select').selectpicker();
+</script>
