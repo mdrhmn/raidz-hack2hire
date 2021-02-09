@@ -33,15 +33,52 @@ ITDPs (program participants) want to know their status in the program (trainings
 
 ### ITDP Personas
 
-There are 3 types of ITDP personas/stakeholders to consider:
+There are **3 types of ITDP personas/stakeholders** to consider:
 
-1. ITDP Participant
+1. **ITDP Participant**
 - My name is John and I am a participant in the IT Development Program. 
 - I currently work on the Buyers Experience space under Dell.com
 - I do my required ITDP trainings
 - I have a busy work schedule so I attend maybe 1 or 2 ITDP events a quarter sometimes none.
 - I want to know how I am doing on my attendance in the program.
 
+2. **ITDP Committee Lead**
+- My name is Sally I am a participant in the IT Development Program and a committee lead.
+- As a committee lead, I work with fellow ITDP participants on different events. 
+- I haven’t completed all my trainings
+- Because I plan a variety of events I attend most ITDP functions. 
+- I want to know how many trainings I am away from attending summit. 
+
+3. **ITDP Program Manager**
+- I am Joyce, the ITDP program manager.
+- I work with ITDP Committee Leads to plan trainings, social hangouts, and volunteer events. 
+- Part of my role is identifying top talent in the program based off manager feedback and the ITDP participants level of engagement.
+- I want a one stop shop view of every ITDPs level of engagement from training to event attendance.
+
+
 ### Solutions
+
+Due to time constraint and lack of manpower (we were among the smallest team there is), we strategised to implement features that covers all 3 personas centered around 1 use case: **Event Creation and Management**.
+
+**List of Features:**
+1. **ITDP Participant**
+- View all available/active events 
+- Register for events
+- Receive registration email and SMS notification
+- View details of registered events
+- Edit event registration status 
+- Submit feedback for attended/completed event
+
+2. **ITDP Committee Lead**
+- Create events
+- View proposed events by Program Manager
+- Edit event details
+
+3. **ITDP Program Manager**
+- Propose events to Committee Lead
+- View details of all proposed events to Committee Lead
+- View feedbacks from Participants
+- View details of created events
+- Auto-register/invitation of event participants (trainings)
 
 
