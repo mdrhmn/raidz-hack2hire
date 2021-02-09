@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is the repository for our team (Raidz)'s Event Management System (EMS) web application for Dell Technologies Malaysia's Digital Virtual Hack2Hire on the 3-4 February 2021.
+This is the repository for our team (Raidz)'s first place award-winning Event Management System (EMS) web application for Dell Technologies Malaysia's Digital Virtual Hack2Hire on the 3-4 February 2021.
 
 Team Raidz:
 1. **Muhammad Rahiman bin Abdulmanab**
@@ -82,3 +82,21 @@ Due to time constraint and lack of manpower (we were among the smallest team the
 - Auto-register/invitation of event participants (trainings)
 
 
+## Technology Stack
+
+### Front-end
+* Bootstrap 4.5.2
+* jQuery 3.5.1
+* Popper.js 1.16.1
+* Bootstrap-Select 1.13.14
+* TailwindCSS 2.0
+* Font Awesome 5.14.0
+* DataTables 1.10.21
+* Chart.js 2.8.0
+* Summernote 0.8.18
+* Momment.js 2.28.0
+  
+### Back-end
+
+* Django==3.1.6
+* twilio==6.51.1
