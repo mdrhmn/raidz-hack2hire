@@ -8,7 +8,7 @@ Team Raidz:
 1. **Muhammad Rahiman bin Abdulmanab**
 2. **Nur Faidz Hazirah binti Nor'Azman**
 
-Our team managed to **tie in first place** alongside TryHarders team, the first time in the history of the Dell Hack2Hire event since its inception. Both of us were also **shortlisted for the coveted grand prize** which is the **permanent job offer as IT Software Engineer** at Dell Technologies Malaysia, Cyberjaya.
+Our team managed to **tie in first place** alongside TryHarders team, the first time in the history of the Dell Hack2Hire event since its inception for a tie to happen. Both of us were also **shortlisted for the coveted grand prize** which is the **permanent job offer as IT Software Engineer** at Dell Technologies Malaysia, Cyberjaya.
 
 <hr>
 
