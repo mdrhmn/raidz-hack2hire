@@ -61,6 +61,7 @@ There are **3 types of ITDP personas/stakeholders** to consider:
 - Part of my role is identifying top talent in the program based off manager feedback and the ITDP participants level of engagement.
 - I want a one stop shop view of every ITDPs level of engagement from training to event attendance.
 
+<hr>
 
 ### Solutions
 
