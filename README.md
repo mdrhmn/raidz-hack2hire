@@ -166,4 +166,8 @@ The Event Management page for participants shows the list of registered events i
 
 When the registration status is Registered, participants are able to change the status to Unregistered by clicking the Edit icon beside the status. This will prompt a modal for users to select the desired status. The Submit Feedback button is also disabled (greyed out) as participants are not allowed to submit any feedbacks prior to event completion.
 
+![Imgur Image](https://imgur.com/CpNYsLp.png)
+
 When the registration status is Attended (meaning event is complete and user attended the event), the Submit Feedback button is enabled and participants can submit/edit feedback by clicking the button. A modal will appear which allows participants to input the written feedback.
+
+![Imgur Image](https://imgur.com/tPnKOcw.png)
