@@ -113,7 +113,20 @@ Due to time constraint and lack of manpower (we were among the smallest team the
 
 ### Home/Landing Page
 
-For the home or landing page, we derive and copy similar design from existing [Dell Technologies website](https://www.delltechnologies.com/en-my/index.htm). Upon advice and recommendation by our mentor Mufhim Anees, we also borrowed several design elements from [Dell's own Design System](https://www.delldesignsystem.com) such as the font type (Roboto) and size.
+For the home or landing page, we derive and copy similar design from existing [Dell Technologies website](https://www.delltechnologies.com/en-my/index.htm). Upon advice and recommendation by our mentor Mufhim Anees, we also borrowed several design elements from [Dell's own Design System](https://www.delldesignsystem.com) such as the font type (Roboto) and font size.
+
+Replicating existing Dell website design maintains similar look and feel to **ensure users will adapt quickly to the web app**, in line with the web app's goal to be closely integrated to Dell's existing ecosystem. Reusing components is also an efficient approach to save precious time in drafting the UI/UX of the web app.
+
+Users regardless of role/persona and log in status will be met with the home or landing page by default.
 
 ![Imgur Image](https://imgur.com/Oeb5R9N.png)
 
+<hr>
+
+### Log In Page
+
+The log in page has a simple, minimalistic UI design where users can enter their email and password, which is the preferred authentication combination based on our requirements gathering with the stakeholders. Users also have the ability to show/hide their password.
+
+The main highlight of this feature is that users do not have to worry about manual role selection during log in, as the server-side processing will auto detect the user's role upon logging in.
+
+![Imgur Image](https://imgur.com/77UD1dM.png)
