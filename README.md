@@ -108,4 +108,4 @@ Due to time constraint and lack of manpower (we were among the smallest team the
 * Django==3.1.6
 * twilio==6.51.1
 
-[Imgur](https://imgur.com/Oeb5R9N)
+![Imgur Image](https://imgur.com/Oeb5R9N.jpg)
