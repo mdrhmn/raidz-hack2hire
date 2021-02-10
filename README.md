@@ -101,7 +101,7 @@ Due to time constraint and lack of manpower (we were among the smallest team the
 * DataTables 1.10.21
 * Chart.js 2.8.0
 * Summernote 0.8.18
-* Momment.js 2.28.0
+* Moment.js 2.28.0
   
 ### Back-end
 
