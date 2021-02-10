@@ -108,4 +108,12 @@ Due to time constraint and lack of manpower (we were among the smallest team the
 * Django==3.1.6
 * twilio==6.51.1
 
-![Imgur Image](https://imgur.com/Oeb5R9N.jpg)
+
+## Features
+
+### Home/Landing Page
+
+For the home or landing page, we derive and copy similar design from existing [Dell Technologies website](https://www.delltechnologies.com/en-my/index.htm). Upon advice and recommendation by our mentor Mufhim Anees, we also borrowed several design elements from [Dell's own Design System](https://www.delldesignsystem.com) such as the font type (Roboto) and size.
+
+![Imgur Image](https://imgur.com/Oeb5R9N.png)
+
