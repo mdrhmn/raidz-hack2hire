@@ -197,3 +197,39 @@ To create a new event, committee leads can click the Create New Event button to 
 To edit an existing event, committee leads can click the Edit button under the Edit Event column in the table to pop up a modal form shown below:
 
 ![Imgur Image](https://imgur.com/D3IKKmu.png)
+
+<hr>
+
+### Event Proposal Page (Program Manager)
+
+One of the roles of Program Manager in terms of event creation flow/use case is to first propose ITDP events for the quarter to the assigned Committee lead. This can be done through the Event Proposal page for the Program Manager. 
+
+![Imgur Image](https://imgur.com/OYEL6ry.png)
+
+The Program Manager can **propose a new event** by clicking the Propose New Event button. This will prompt a modal form for the Program Manager to fill in.
+
+![Imgur Image](https://imgur.com/CYXDQEv.png)
+
+<hr>
+
+### Event Registration Page (Program Manager)
+
+This Event Registration page allows the Program Manager to **issue event registrations to ITDP participants** for specific event. This feature is useful for events such as trainings, which are compulsory for participants to attend and meet a certain quota. Program Managers can select the event as well as multiple participants to send the RSVP invitation. All registered participants will receive email and SMS notifications.
+
+![Imgur Image](https://imgur.com/LE2OuNt.png)
+
+<hr>
+
+### Event Management Page (Program Manager)
+
+The Event Management page for Program Managers is essentially the same as Committee Lead's, with the slight change that Program Managers will be able to see all events organised instead of ones organised/proposed by them.
+
+![Imgur Image](https://imgur.com/R96Y26a.png)
+
+<hr>
+
+### Feedback Management Page (Program Manager)
+
+The last feature allows Program Managers to view the list of feedbacks for each participant. The feedback entry will be automatically created upon event registration.
+
+![Imgur Image](https://imgur.com/uuEYJnp.png)
