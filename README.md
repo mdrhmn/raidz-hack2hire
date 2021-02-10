@@ -108,4 +108,4 @@ Due to time constraint and lack of manpower (we were among the smallest team the
 * Django==3.1.6
 * twilio==6.51.1
 
-<blockquote class="imgur-embed-pub" lang="en" data-id="Oeb5R9N"><a href="https://imgur.com/Oeb5R9N">View post on imgur.com</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
+![alt text](https://imgur.com/Oeb5R9N)
