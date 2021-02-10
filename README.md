@@ -108,6 +108,9 @@ Due to time constraint and lack of manpower (we were among the smallest team the
 * Django==3.1.6
 * twilio==6.51.1
 
+### Database Design (ERD)
+
+![Imgur Image](https://imgur.com/QLmrChM.png)
 
 ## Features
 
@@ -151,3 +154,16 @@ The event menu/registration section is consolidated together with the home/landi
     Participants also have the ability to **filter ITDP events based on category** via the left-hand-side panel. 
 
     ![Imgur Image](https://imgur.com/eaJ2Lrp.png)
+
+
+<hr>
+
+### Event Management Page (Participant)
+
+The Event Management page for participants shows the list of registered events in a table format. Using DataTables package, the table allows users to sort and search entries. The table shows the event name and category, registration due datetime, status and feedback.
+
+![Imgur Image](https://imgur.com/FpJD8Fm.png)
+
+When the registration status is Registered, participants are able to change the status to Unregistered by clicking the Edit icon beside the status. This will prompt a modal for users to select the desired status. The Submit Feedback button is also disabled (greyed out) as participants are not allowed to submit any feedbacks prior to event completion.
+
+When the registration status is Attended (meaning event is complete and user attended the event), the Submit Feedback button is enabled and participants can submit/edit feedback by clicking the button. A modal will appear which allows participants to input the written feedback.
