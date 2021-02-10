@@ -140,14 +140,14 @@ The event menu/registration section is consolidated together with the home/landi
 
 1. **Currently Active Events**
 
-For this section, users will be able to **see the top 4 active events in card form** from all categories (Social Hangout, Training, Volunteering, Summit). Hovering through each card will show a Bootstrap popover consisting of the event details. Participants can register for the events by clicking the Register button. For our prototype, the events displayed in the photo below are merely placeholders.'
+    For this section, users will be able to **see the top 4 active events in card form** from all categories (Social Hangout, Training, Volunteering, Summit). Hovering through each card will show a Bootstrap popover consisting of the event details. Participants can register for the events by clicking the Register button. For our prototype, the events displayed in the photo below are merely placeholders.'
 
-![Imgur Image](https://imgur.com/oF9Mn2K.png)
+    ![Imgur Image](https://imgur.com/oF9Mn2K.png)
 
 2. **Register for ITDP Events**
 
-This section will **list down all active (read: registrable) ITDP events in card form**. Each card will show the event category, title, description and registration due datetime. Participants can register by clicking the Register button, which will pop up a confirmation modal. Because most of the user information regarding the registration is derived from the User model, participants no longer have to fill in a new and separate registration form. Participants will be redirected to the Event Management page after successful registration.
+    This section will **list down all active (read: registrable) ITDP events in card form**. Each card will show the event category, title, description and registration due datetime. Participants can register by clicking the Register button, which will pop up a confirmation modal. Because most of the user information regarding the registration is derived from the User model, participants no longer have to fill in a new and separate registration form. Participants will be redirected to the Event Management page after successful registration.
 
-Participants also have the ability to **filter ITDP events based on category** via the left-hand-side panel. 
+    Participants also have the ability to **filter ITDP events based on category** via the left-hand-side panel. 
 
-![Imgur Image](https://imgur.com/eaJ2Lrp.png)
+    ![Imgur Image](https://imgur.com/eaJ2Lrp.png)
