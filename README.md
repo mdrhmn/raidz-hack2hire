@@ -127,6 +127,27 @@ Users regardless of role/persona and log in status will be met with the home or 
 
 The log in page has a simple, minimalistic UI design where users can enter their email and password, which is the preferred authentication combination based on our requirements gathering with the stakeholders. Users also have the ability to show/hide their password.
 
-The main highlight of this feature is that users do not have to worry about manual role selection during log in, as the server-side processing will auto detect the user's role upon logging in.
+The main highlight of this feature is that users do not have to worry about manual role selection during log in, as the server-side processing will auto detect the user's role upon logging in. All users will be redirected to the home/landing page after successful log in.
 
 ![Imgur Image](https://imgur.com/77UD1dM.png)
+
+<hr>
+
+
+### Event Menu/Registration Section
+
+The event menu/registration section is consolidated together with the home/landing page to minimise clicking and page redirection (less hassle). The design approach is based upon [Udemy's website](https://www.udemy.com/courses/development/web-development/). The event menu/registration section is divided into 2 subsections: **Currently Active Events** and **Register for ITDP Events**.
+
+1. **Currently Active Events**
+
+For this section, users will be able to **see the top 4 active events in card form** from all categories (Social Hangout, Training, Volunteering, Summit). Hovering through each card will show a Bootstrap popover consisting of the event details. Participants can register for the events by clicking the Register button. For our prototype, the events displayed in the photo below are merely placeholders.'
+
+![Imgur Image](https://imgur.com/oF9Mn2K.png)
+
+2. **Register for ITDP Events**
+
+This section will **list down all active (read: registrable) ITDP events in card form**. Each card will show the event category, title, description and registration due datetime. Participants can register by clicking the Register button, which will pop up a confirmation modal. Because most of the user information regarding the registration is derived from the User model, participants no longer have to fill in a new and separate registration form. Participants will be redirected to the Event Management page after successful registration.
+
+Participants also have the ability to **filter ITDP events based on category** via the left-hand-side panel. 
+
+![Imgur Image](https://imgur.com/eaJ2Lrp.png)
