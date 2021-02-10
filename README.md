@@ -160,14 +160,40 @@ The event menu/registration section is consolidated together with the home/landi
 
 ### Event Management Page (Participant)
 
-The Event Management page for participants shows the list of registered events in a table format. Using DataTables package, the table allows users to sort and search entries. The table shows the event name and category, registration due datetime, status and feedback.
+The Event Management page for participants **shows the list of registered events in a table format**. Using DataTables package, the table allows users to sort and search entries. The table shows the event name and category, registration due datetime, status and feedback.
 
 ![Imgur Image](https://imgur.com/FpJD8Fm.png)
 
-When the registration status is Registered, participants are able to change the status to Unregistered by clicking the Edit icon beside the status. This will prompt a modal for users to select the desired status. The Submit Feedback button is also disabled (greyed out) as participants are not allowed to submit any feedbacks prior to event completion.
+When the registration status is Registered, participants are able to **change the status to Unregistered** by clicking the Edit icon beside the status. This will prompt a modal for users to select the desired status. The Submit Feedback button is also disabled (greyed out) as participants are not allowed to submit any feedbacks prior to event completion.
 
 ![Imgur Image](https://imgur.com/CpNYsLp.png)
 
-When the registration status is Attended (meaning event is complete and user attended the event), the Submit Feedback button is enabled and participants can submit/edit feedback by clicking the button. A modal will appear which allows participants to input the written feedback.
+When the registration status is Attended (meaning event is complete and user attended the event), the Submit Feedback button is enabled and participants can **submit/edit feedback** by clicking the button. A modal will appear which allows participants to input the written feedback.
 
 ![Imgur Image](https://imgur.com/tPnKOcw.png)
+
+<hr>
+
+### Event Proposal Page (Committee Lead)
+
+For Committee Lead and Program Manager, they have a **separate administrator-like page** for them to manage events which are accessible via the navigation bar link at the home/landing page. 
+
+The Event Proposal page for committee leads allows them to **view list of proposals filed by the Program Manager** in table format (DataTables).
+
+![Imgur Image](https://imgur.com/1wwOLvx.png)
+
+<hr>
+
+### Event Management Page (Committee Lead)
+
+Committee Lead is considered a subset of Participant (can be both participants and organisers of events). The Committee Lead's Event Management page is different from that of Participant's as it allows committee leads to **create new events**, **edit existing events** as well as **see details of all events organised** by the committee lead.
+
+![Imgur Image](https://imgur.com/MTGfkYN.png)
+
+To create a new event, committee leads can click the Create New Event button to pop up a modal form shown below:
+
+![Imgur Image](https://imgur.com/Mq95KBo.png)
+
+To edit an existing event, committee leads can click the Edit button under the Edit Event column in the table to pop up a modal form shown below:
+
+![Imgur Image](https://imgur.com/D3IKKmu.png)
